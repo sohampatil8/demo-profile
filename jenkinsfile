@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_REPO = 'sohampatil08/soham_patil_profile'
+        DOCKERHUB_REPO = 'sohampatil08/demo-profile'
     }
 
     stages {
@@ -41,7 +41,7 @@ pipeline {
                         sh """
                     aws eks update-kubeconfig --name my-cluster --region ap-south-1 --kubeconfig /tmp/config
                     kubectl apply -f k8s-pipeline.yml  --kubeconfig=/tmp/config
-                    kubectl set image deployment/css-deployment docker-jenkins=sohampatil08/soham_patil_profile:${env.BUILD_NUMBER}  --kubeconfig=/tmp/config 
+                    kubectl set image deployment/css-deployment docker-jenkins=sohampatil08/demo-profile:${env.BUILD_NUMBER}  --kubeconfig=/tmp/config 
                     """
                     }
                 }
