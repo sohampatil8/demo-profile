@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_REPO = 'sohampatil08/demo-profile'
     }
-
+    stages {
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${DOCKERHUB_REPO}:${BUILD_NUMBER} .'
