@@ -5,13 +5,6 @@ pipeline {
         DOCKERHUB_REPO = 'sohampatil08/demo-profile'
     }
 
-    stages {
-        stage('Pull Source Code') {
-            steps {
-                git 'https://github.com/soham08022001/DevopsTool-Jenkins-Integration.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${DOCKERHUB_REPO}:${BUILD_NUMBER} .'
@@ -39,8 +32,8 @@ pipeline {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS]]) {
                     script {
                         sh """
-                    aws eks update-kubeconfig --name my-cluster --region ap-south-1 --kubeconfig /tmp/config
-                    kubectl apply -f k8s-pipeline.yml  --kubeconfig=/tmp/config
+                    aws eks update-kubeconfig --name my-cluster --region us-east-1 --kubeconfig /tmp/config
+                    kubectl apply -f k8s.yml  --kubeconfig=/tmp/config
                     kubectl set image deployment/css-deployment docker-jenkins=sohampatil08/demo-profile:${env.BUILD_NUMBER}  --kubeconfig=/tmp/config 
                     """
                     }
