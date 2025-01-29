@@ -19,23 +19,6 @@ pipeline {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', registryCredential) {
                         sh 'docker push ${DOCKERHUB_REPO}:${BUILD_NUMBER}'
-                    }
-                }
-            }
-        }
-        stage('Deploy to Kubernetes') {
-            environment {
-                AWS_CREDENTIALS = 'aws-creds'
-            }
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS]]) {
-                    script {
-                        sh """
-                    aws eks update-kubeconfig --name my-cluster --region us-east-1 --kubeconfig /tmp/config
-                    kubectl apply -f k8s.yml  --kubeconfig=/tmp/config
-                    kubectl set image deployment/css-deployment docker-jenkins=sohampatil08/demo-profile:${env.BUILD_NUMBER}  --kubeconfig=/tmp/config 
-                    """
-                    }
                 }
             }
         }
