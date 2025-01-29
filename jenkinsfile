@@ -17,7 +17,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', registryCredential) {
+                    withDockerRegistry([credentialsId: 'docker-creds', url: 'https://index.docker.io/v1/']) {
                         sh 'docker push ${DOCKERHUB_REPO}:${BUILD_NUMBER}'
                     }
                 }
