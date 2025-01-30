@@ -8,7 +8,7 @@ pipeline {
 
         stage('pull repository from git') {
             steps{
-                sh 'git pull sohampatil08/demo-profile'
+                sh 'git pull https://github.com/sohampatil8/demo-profile.git'
             }
         }
 
