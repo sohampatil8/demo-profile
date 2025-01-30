@@ -5,6 +5,13 @@ pipeline {
         DOCKERHUB_REPO = 'sohampatil08/demo-profile'
     }
     stages {
+
+        stage('pull repository from git') {
+            steps{
+                sh 'git pull sohampatil08/demo-profile'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${DOCKERHUB_REPO}:${BUILD_NUMBER} .'
